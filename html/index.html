@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+	<head>
+		<title>A TO B GENERATOR</title>
+		<link rel="stylesheet" href="/css/style.css"/>
+		<body>
+			<span id="loading">Now Loading...</span>
+			<div id="content">
+				<header>
+					<h1>A TO B GENERATOR</h1>
+				</header>
+				<main>
+					<div id="ab">
+						<input type="text" id="a" placeholder="A" readonly/>
+						<span id="particle">を</span>
+						<input type="text" id="b" placeholder="Bする" readonly/>
+					</div>
+					<div>
+						<button id="btn-update-a" data-type="a">UPDATE A</button>
+						<button id="btn-update-b" data-type="b">UPDATE B</button>
+						<button id="btn-update-ab">UPDATE AB</button>
+					</div>
+					<div>
+						<button id="btn-save-a" data-type="a">SAVE A</button>
+						<button id="btn-save-b" data-type="b">SAVE B</button>
+						<button id="btn-save-ab">SAVE AB</button>
+					</div>
+					<div>
+						<button id="btn-prev-a" data-type="a" data-word="" >PREV A</button>
+						<button id="btn-next-a" data-type="a" data-word="" >NEXT A</button>
+						<button id="btn-prev-b" data-type="b" data-word="" >PREV B</button>
+						<button id="btn-next-b" data-type="b" data-word="" >NEXT B</button>
+					</div>
+					<h2>AB</h2>
+					<ul id="fav-ab"></ul>
+					<h2>A</h2>
+					<ul id="fav-a"></ul>
+					<h2>B</h2>
+					<ul id="fav-b"></ul>
+				</main>
+				<footer>(C) 2024 A TO B GENERATOR</footer>
+			</div>
+			<span id="calc-width-a" class="calc"></span>
+			<span id="calc-width-b" class="calc"></span>
+			<script src="/js/index.js"></script>
+		</body>
+	</head>
+</html>

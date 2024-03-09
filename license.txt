@@ -1,0 +1,33 @@
+A to B GENERATOR License
+
+Copyright (c) 2024 A to B GENERATOR
+
+All rights reserved by A to B GENERATOR. This software is only permitted for personal, non-commercial use under the following conditions:
+
+1. Commercial use of this software is explicitly prohibited.
+2. Copying, modifying, creating derivative works, distributing, sublicensing, and selling of this software are prohibited.
+3. This software is provided "as is" without any express or implied warranties, including but not limited to the warranties of merchantability, fitness for a particular purpose, and non-infringement.
+
+A to B GENERATOR shall not be liable for any use of this software, including commercial use.
+
+---
+
+[SudachiDict License Information]
+
+SudachiDict by Works Applications Co., Ltd. is licensed under the [Apache License, Version2.0](http://www.apache.org/licenses/LICENSE-2.0.html)
+
+   Copyright (c) 2017-2023 Works Applications Co., Ltd.
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+This project includes UniDic and a part of NEologd.
