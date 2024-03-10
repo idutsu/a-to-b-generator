@@ -1,30 +1,22 @@
-import { promises as fs } from 'fs';
+import { promises as fs, readFileSync } from 'fs';
 import express from "express";
 const app = express();
 const port = 8000;
 app.use(express.static("html"));
 
-const DIC_A  = 'dic/dic-a.csv';
-const DIC_B  = 'dic/dic-b.csv';
+const DIC_ = {
+	a : getDicLines('dic/dic-a.csv'),
+	b : getDicLines('dic/dic-b.csv'),
+}
+
 const FAV_ = {
 	ab : 'fav/fav-ab.csv',
 	a  : 'fav/fav-a.csv',
 	b  : 'fav/fav-b.csv'	
 }
 
-const getDicLines = async (file) => {
-	const fileContent = await fs.readFile(file, 'utf8');
-	const lines = fileContent.split('\n').filter(line => line.trim());
-	return lines;
-}
-
-const dicLines_ = {
-	a : await getDicLines(DIC_A),
-	b : await getDicLines(DIC_B),
-}
-
 app.get('/get/random/word/:type', (req, res) => {
-	const lines = dicLines_[req.params.type];
+	const lines = DIC_[req.params.type];
     try {
         const randomLine = lines[Math.floor(Math.random() * lines.length)];
         const randomRowArray = randomLine.split(',');
@@ -120,3 +112,8 @@ app.post('/delete/fav/word/:type/:word', async (req, res) => {
 
 app.listen(port, () => console.log(`http://localhost:${port}`));
 
+function getDicLines(file) {
+	const fileContent = readFileSync(file, 'utf8');
+	const lines = fileContent.split('\n').filter(line => line.trim());
+	return lines;
+}
