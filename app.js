@@ -4,27 +4,27 @@ const app = express();
 const port = 8000;
 app.use(express.static("html"));
 
-const TYPE_A = 'a';
-const TYPE_B = 'b';
 const DIC_A  = 'dic/dic-a.csv';
 const DIC_B  = 'dic/dic-b.csv';
-const FAV_AB = 'fav/fav-ab.csv';
-const FAV_A  = 'fav/fav-a.csv';
-const FAV_B  = 'fav/fav-b.csv';
+const FAV_ = {
+	ab : 'fav/fav-ab.csv',
+	a  : 'fav/fav-a.csv',
+	b  : 'fav/fav-b.csv'	
+}
 
-const getDicLines = async (type) => {
-	const file = (type === TYPE_A) ? DIC_A : DIC_B;
+const getDicLines = async (file) => {
 	const fileContent = await fs.readFile(file, 'utf8');
 	const lines = fileContent.split('\n').filter(line => line.trim());
 	return lines;
 }
 
-const dicLinesA = await getDicLines(TYPE_A);
-const dicLinesB = await getDicLines(TYPE_B);
+const dicLines_ = {
+	a : await getDicLines(DIC_A),
+	b : await getDicLines(DIC_B),
+}
 
 app.get('/get/random/word/:type', (req, res) => {
-    const type = req.params.type;
-	const lines = (type === TYPE_A) ? dicLinesA : dicLinesB;
+	const lines = dicLines_[req.params.type];
     try {
         const randomLine = lines[Math.floor(Math.random() * lines.length)];
         const randomRowArray = randomLine.split(',');
@@ -37,7 +37,7 @@ app.get('/get/random/word/:type', (req, res) => {
 
 app.get('/get/fav/abs', async (req, res) => {
     try {
-        const fileContent = await fs.readFile(FAV_AB, 'utf8');
+        const fileContent = await fs.readFile(FAV_['ab'], 'utf8');
         const lines = fileContent.split('\n').filter(line => line.trim());
 		const resLines = lines.map(line => line.split(','));
 		res.json(resLines);	
@@ -48,8 +48,7 @@ app.get('/get/fav/abs', async (req, res) => {
 });
 
 app.get('/get/fav/words/:type', async (req, res) => {
-	const type = req.params.type;
-	const file = (type === TYPE_A) ? FAV_A : FAV_B;
+	const file = FAV_[req.params.type];
     try {
         const fileContent = await fs.readFile(file, 'utf8');
         const lines = fileContent.split('\n').filter(line => line.trim());
@@ -64,7 +63,7 @@ app.post('/save/fav/ab/:a/:b', async (req, res) => {
     const { a, b } = req.params;
     const newLine = `${a},${b}\n`;
     try {
-        await fs.appendFile(FAV_AB, newLine, 'utf8');
+        await fs.appendFile(FAV_['ab'], newLine, 'utf8');
         res.json({ success: true, message: 'Sentence saved successfully.' });
     } catch (error) {
         console.error(error);
@@ -74,7 +73,7 @@ app.post('/save/fav/ab/:a/:b', async (req, res) => {
 
 app.post('/save/fav/word/:type/:word', async (req, res) => {
     const {type, word} = req.params;
-	const file = (type === TYPE_A) ? FAV_A : FAV_B;
+	const file = FAV_[type];
 	const newLine = `${word}\n`;
     try {
         await fs.appendFile(file, newLine, 'utf8');
@@ -104,7 +103,7 @@ app.post('/delete/fav/ab/:a/:b', async (req, res) => {
 
 app.post('/delete/fav/word/:type/:word', async (req, res) => {
     const { type, word } = req.params;
-	const file = (type === TYPE_A) ? FAV_A : FAV_B;
+	const file = FAV_[type];
     try {
         const fileContent = await fs.readFile(file, 'utf8');
         const lines = fileContent.split('\n');
