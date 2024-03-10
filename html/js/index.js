@@ -371,7 +371,6 @@
 
 	function createFavList(word) {
 		const li = document.createElement("li");
-		const word = data;
 		const span = document.createElement("span");
 		span.textContent = word;
 		li.appendChild(span);
