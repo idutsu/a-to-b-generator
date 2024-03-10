@@ -4,6 +4,7 @@
 	color: #009900;
     font-weight: normal;
     box-sizing: border-box;
+	outline: none;
 }
 
 html {
@@ -20,11 +21,14 @@ body {
     padding: 1rem;
 }
 
-a,
-a:visited,
-a:hover {
+a,a:visited {
     color: inherit;
-    text-decoration: underline;
+    text-decoration: none;
+}
+
+a:hover {
+	color: inherit;
+	opacity: 0.7;
 }
 
 button {
@@ -97,12 +101,20 @@ input[type="text"] {
 	display: none;
 }
 
+#fav-a, #fav-b {
+	display: inline-block;
+	vertical-align: top;
+}
+
+#fav-a {
+	margin-right: 1rem;
+}
+
 #loading {
 	display:block;
 }
 
 footer {
-	text-align: right;
 	padding:1rem 0 1rem;
 }
 
