@@ -107,19 +107,7 @@
 			if(datas) {
 				const fragment = document.createDocumentFragment();
 				datas.forEach(data => {
-					const li = document.createElement("li");
-					const word = data;
-					const span = document.createElement("span");
-					span.textContent = word;
-					li.appendChild(span);
-					const deleteBtn = document.createElement("button");
-					deleteBtn.dataset.type = "delete";
-					deleteBtn.textContent = "DELETE";
-					li.appendChild(deleteBtn);
-					const useBtn = document.createElement("button");
-					useBtn.dataset.type = "use";
-					useBtn.textContent = "USE";
-					li.appendChild(useBtn);
+					const li = createFavList(data);
 					fragment.appendChild(li);
 				});
 				EL_FAV_A.innerHTML = "";
@@ -142,19 +130,7 @@
 			if(datas) {
 				const fragment = document.createDocumentFragment();
 				datas.forEach(data => {
-					const li = document.createElement("li");
-					const word = data;
-					const span = document.createElement("span");
-					span.textContent = word;
-					li.appendChild(span);
-					const deleteBtn = document.createElement("button");
-					deleteBtn.dataset.type = "delete";
-					deleteBtn.textContent = "DELETE";
-					li.appendChild(deleteBtn);
-					const useBtn = document.createElement("button");
-					useBtn.dataset.type = "use";
-					useBtn.textContent = "USE";
-					li.appendChild(useBtn);
+					const li = createFavList(data);
 					fragment.appendChild(li);
 				});
 				EL_FAV_B.innerHTML = "";
@@ -393,4 +369,20 @@
 		if (history.length >= 10 ) history.shift();
 	}
 
+	function createFavList(word) {
+		const li = document.createElement("li");
+		const word = data;
+		const span = document.createElement("span");
+		span.textContent = word;
+		li.appendChild(span);
+		const deleteBtn = document.createElement("button");
+		deleteBtn.dataset.type = "delete";
+		deleteBtn.textContent = "DELETE";
+		li.appendChild(deleteBtn);
+		const useBtn = document.createElement("button");
+		useBtn.dataset.type = "use";
+		useBtn.textContent = "USE";
+		li.appendChild(useBtn);
+		return li;
+	}
 })();
