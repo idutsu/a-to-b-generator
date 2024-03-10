@@ -1,5 +1,7 @@
-import { promises as fs, readFileSync } from 'fs';
+import { promises as fs, readFileSync, existsSync, writeFileSync, mkdirSync } from 'fs';
+import { dirname } from 'path';
 import express from "express";
+
 const app = express();
 const port = 8000;
 app.use(express.static("html"));
@@ -14,6 +16,8 @@ const FAV_ = {
 	a  : 'fav/fav-a.csv',
 	b  : 'fav/fav-b.csv'	
 }
+
+createFavFiles();
 
 app.get('/get/random/word/:type', (req, res) => {
 	const lines = DIC_[req.params.type];
@@ -117,3 +121,15 @@ function getDicLines(file) {
 	const lines = fileContent.split('\n').filter(line => line.trim());
 	return lines;
 }
+
+function createFavFiles() {
+	Object.values(FAV_).forEach((file) => {
+	  if (!existsSync(file)) {
+		const dir = dirname(file);
+		if (!existsSync(dir)) {
+		  mkdirSync(dir, { recursive: true });
+		}
+		writeFileSync(file, '', 'utf8');
+	  }
+	});
+  }
