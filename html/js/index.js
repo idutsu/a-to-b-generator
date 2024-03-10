@@ -4,9 +4,9 @@
 	const TYPE_B = "b";
 	const EL_A = document.getElementById("a");
 	const EL_B = document.getElementById("b");
-	const EL_FAV_A = document.getElementById("fav-a");
-	const EL_FAV_B = document.getElementById("fav-b");
-	const EL_FAV_AB = document.getElementById("fav-ab");
+	const EL_FAV_A = document.getElementById("fav-a-list");
+	const EL_FAV_B = document.getElementById("fav-b-list");
+	const EL_FAV_AB = document.getElementById("fav-ab-list");
 	const EL_SAVE_BTN_A = document.getElementById("btn-save-a");
 	const EL_SAVE_BTN_B = document.getElementById("btn-save-b");
 	const EL_SAVE_BTN_AB = document.getElementById("btn-save-ab");
@@ -33,7 +33,7 @@
 			const response = await fetch(`/get/random/word/${TYPE_A}`);
 			const data = await response.json();
 			if(data) {
-				const word = eschtml(trim(data[12]));
+				const word = data[12];
 				EL_A.value = word;
 				addHistory(HISTORY_A, word);
 				calcWidth(EL_A, EL_CALC_WIDTH_A);
@@ -53,7 +53,7 @@
 			const response = await fetch(`/get/random/word/${TYPE_B}`);
 			const data = await response.json();
 			if(data) {
-				let word = eschtml(trim(data[12]));
+				let word = data[12];
 				if (data[7] === "サ変可能") word = word + "する";
 				EL_B.value = word;
 				addHistory(HISTORY_B, word);
@@ -79,7 +79,7 @@
 					const li = document.createElement("li");
 					const a = data[0];
 					const b = data[1];
-					li.textContent = eschtml(`${a}を${b}`);
+					li.textContent = `${a}を${b}`;
 					const btn = document.createElement("button");
 					btn.textContent = "DELETE";
 					btn.dataset.a = a;
@@ -108,7 +108,7 @@
 				const fragment = document.createDocumentFragment();
 				datas.forEach(data => {
 					const li = document.createElement("li");
-					const word = eschtml(data);
+					const word = data;
 					const span = document.createElement("span");
 					span.textContent = word;
 					li.appendChild(span);
@@ -143,7 +143,7 @@
 				const fragment = document.createDocumentFragment();
 				datas.forEach(data => {
 					const li = document.createElement("li");
-					const word = eschtml(data);
+					const word = data;
 					const span = document.createElement("span");
 					span.textContent = word;
 					li.appendChild(span);
@@ -171,8 +171,8 @@
 	const saveFavAB = async () => {
 		if(isFetch) return;
 		isFetch = true;
-		const a = trim(EL_A.value);
-		const b = trim(EL_B.value);
+		const a = EL_A.value;
+		const b = EL_B.value;
 		if(a && b) {
 			try {
 				const response = await fetch(`/save/fav/ab/${a}/${b}`, {method: "POST"});
@@ -192,7 +192,7 @@
 	const saveFavA = async (event) => {
 		if(isFetch) return;
 		isFetch = true;
-		const word = trim(EL_A.value);
+		const word = EL_A.value;
 		if(word) {
 			try {
 				const response = await fetch(`/save/fav/word/${TYPE_A}/${word}`, {method: "POST"});
@@ -212,7 +212,7 @@
 	const saveFavB = async (event) => {
 		if(isFetch) return;
 		isFetch = true;
-		const word = trim(EL_B.value);
+		const word = EL_B.value;
 		if(word) {
 			try {
 				const response = await fetch(`/save/fav/word/${TYPE_B}/${word}`, {method: "POST"});
@@ -290,7 +290,6 @@
 		}
 	}
 
-
 	const useFavA = async (event) => {
 		if(isFetch) return;
 		if (event.target.tagName === "BUTTON" && event.target.dataset.type === "use") {
@@ -353,11 +352,6 @@
 		}
 	}
 
-	const getRandomAB = async () => {
-		await getRandomA();
-		await getRandomB();
-	}
-
 	//initialize
 	(async () => {
 		await getRandomAB();
@@ -384,17 +378,9 @@
 	})();
 
 	//utility functions
-	function eschtml(str) {
-		return str
-		  .replace(/&/g, "&amp;")
-		  .replace(/</g, "&lt;")
-		  .replace(/>/g, "&gt;")
-		  .replace(/"/g, "&quot;")
-		  .replace(/'/g, "&#039;");
-	}
-	
-	function trim(str) {
-		return str.replace(/^[\s\u3000]+|[\s\u3000]+$/g, "");
+	async function getRandomAB() {
+		await getRandomA();
+		await getRandomB();
 	}
 
 	function calcWidth(wordEl, calcEl) {
