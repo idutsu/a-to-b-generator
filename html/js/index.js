@@ -271,6 +271,7 @@
 		if (event.target.tagName === "BUTTON" && event.target.dataset.type === "use") {
 			const word = event.target.parentNode.querySelector("span").textContent;
 			EL_A.value = word;
+			addHistory(HISTORY_A, word);
 			calcWidth(EL_A, EL_CALC_WIDTH_A);
 		}
 	}
@@ -280,6 +281,7 @@
 		if (event.target.tagName === "BUTTON" && event.target.dataset.type === "use") {
 			const word = event.target.parentNode.querySelector("span").textContent;
 			EL_A.value = word;
+			addHistory(HISTORY_B, word);
 			calcWidth(EL_B, EL_CALC_WIDTH_B);
 		}
 	}
@@ -363,10 +365,12 @@
 	}
 	
 	function addHistory(history, word) {
+		const index = history.indexOf(word);
+		if (index !== -1) history.splice(index, 1);
 		history.push(word);
 		if (history.length >= 10) history.shift();
 	}
-
+	
 	function createFavList(word) {
 		const li = document.createElement("li");
 		const span = document.createElement("span");
