@@ -42,7 +42,7 @@ button {
 	margin-top: 5px;
 }
 
-button:hover{
+button:hover, .active-btn{
 	color: black;
 	background-color: #009900;
 }
