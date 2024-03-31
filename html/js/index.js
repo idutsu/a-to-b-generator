@@ -341,20 +341,20 @@
 		isPlayAB = false;
 	}
 
-	const playRandomB = async () => {
+	const playRandomB = () => {
 		isPlayA = false;
 		isPlayB = true;
 		isPlayAB = false;
 
 	}
 
-	const playRandomAB = async () => {
+	const playRandomAB = () => {
 		isPlayA = false;
 		isPlayB = false;
 		isPlayAB = true;
 	}
 
-	const stopPlayRandom = async () => {
+	const stopPlayRandom = () => {
 		isPlayA = false;
 		isPlayB = false;
 		isPlayAB = false;
