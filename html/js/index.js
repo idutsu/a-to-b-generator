@@ -13,6 +13,10 @@
 	const EL_UPDATE_BTN_A = document.getElementById("btn-update-a");
 	const EL_UPDATE_BTN_B = document.getElementById("btn-update-b");
 	const EL_UPDATE_BTN_AB = document.getElementById("btn-update-ab");
+	const EL_PLAY_BTN_A = document.getElementById("btn-play-a");
+	const EL_PLAY_BTN_B = document.getElementById("btn-play-b");
+	const EL_PLAY_BTN_AB = document.getElementById("btn-play-ab");
+	const EL_STOP_BTN = document.getElementById("btn-stop");
 	const EL_NEXT_BTN_A = document.getElementById("btn-next-a");
 	const EL_NEXT_BTN_B = document.getElementById("btn-next-b");
 	const EL_PREV_BTN_A = document.getElementById("btn-prev-a");
@@ -24,6 +28,9 @@
 	const HISTORY_A = [];
 	const HISTORY_B = [];
 	let isFetch = false;
+	let isPlayA = false;
+	let isPlayB = false;
+	let isPlayAB = false;
 	
 	// main functions
 	const getRandomA = async () => {
@@ -328,6 +335,46 @@
 		}
 	}
 
+	const playRandomA = () => {
+		isPlayA = true;
+		isPlayB = false;
+		isPlayAB = false;
+	}
+
+	const playRandomB = async () => {
+		isPlayA = false;
+		isPlayB = true;
+		isPlayAB = false;
+
+	}
+
+	const playRandomAB = async () => {
+		isPlayA = false;
+		isPlayB = false;
+		isPlayAB = true;
+	}
+
+	const stopPlayRandom = async () => {
+		isPlayA = false;
+		isPlayB = false;
+		isPlayAB = false;
+	}
+
+	let lastTime = 0;
+	const playRandom = async (timestamp) => {
+		if (timestamp - lastTime >= 2000) {
+			lastTime = timestamp;
+			if (isPlayA) {
+				await getRandomA();
+			} else if (isPlayB) {
+				await getRandomB();
+			} else if (isPlayAB) {
+				await getRandomAB();
+			}
+		}
+		requestAnimationFrame(playRandom);
+	};
+
 	//initialize
 	(async () => {
 		await getRandomAB();
@@ -349,6 +396,11 @@
 		EL_PREV_BTN_B.addEventListener("click", prevB);
 		EL_NEXT_BTN_A.addEventListener("click", nextA);
 		EL_NEXT_BTN_B.addEventListener("click", nextB);
+		EL_PLAY_BTN_A.addEventListener("click", playRandomA);
+		EL_PLAY_BTN_B.addEventListener("click", playRandomB);
+		EL_PLAY_BTN_AB.addEventListener("click", playRandomAB);
+		EL_STOP_BTN.addEventListener("click", stopPlayRandom);
+		requestAnimationFrame(playRandom);
 		document.getElementById("content").style.display = "block";
 		document.getElementById("loading").style.display = "none";
 	})();
