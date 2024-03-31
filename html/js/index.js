@@ -2,6 +2,7 @@
 	//constants
 	const TYPE_A = "a";
 	const TYPE_B = "b";
+	const CLASS_ACTIVE_BTN = "active-btn";
 	const EL_A = document.getElementById("a");
 	const EL_B = document.getElementById("b");
 	const EL_FAV_A = document.getElementById("fav-a-list");
@@ -335,29 +336,31 @@
 		}
 	}
 
-	const playRandomA = () => {
-		isPlayA = true;
-		isPlayB = false;
-		isPlayAB = false;
-	}
-
-	const playRandomB = () => {
-		isPlayA = false;
-		isPlayB = true;
-		isPlayAB = false;
-
-	}
-
-	const playRandomAB = () => {
-		isPlayA = false;
-		isPlayB = false;
-		isPlayAB = true;
-	}
-
 	const stopPlayRandom = () => {
 		isPlayA = false;
 		isPlayB = false;
 		isPlayAB = false;
+		EL_PLAY_BTN_A.classList.remove(CLASS_ACTIVE_BTN);
+		EL_PLAY_BTN_B.classList.remove(CLASS_ACTIVE_BTN);
+		EL_PLAY_BTN_AB.classList.remove(CLASS_ACTIVE_BTN);
+	}
+
+	const playRandomA = () => {
+		stopPlayRandom();
+		isPlayA = true;
+		EL_PLAY_BTN_A.classList.add(CLASS_ACTIVE_BTN);
+	}
+
+	const playRandomB = () => {
+		stopPlayRandom();
+		isPlayB = true;
+		EL_PLAY_BTN_B.classList.add(CLASS_ACTIVE_BTN);
+	}
+
+	const playRandomAB = () => {
+		stopPlayRandom();
+		isPlayAB = true;
+		EL_PLAY_BTN_AB.classList.add(CLASS_ACTIVE_BTN);
 	}
 
 	let lastTime = 0;
