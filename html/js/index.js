@@ -271,7 +271,6 @@
 		if (event.target.tagName === "BUTTON" && event.target.dataset.type === "use") {
 			const word = event.target.parentNode.querySelector("span").textContent;
 			EL_A.value = word;
-			addHistory(HISTORY_A, word);
 			calcWidth(EL_A, EL_CALC_WIDTH_A);
 		}
 	}
@@ -281,7 +280,6 @@
 		if (event.target.tagName === "BUTTON" && event.target.dataset.type === "use") {
 			const word = event.target.parentNode.querySelector("span").textContent;
 			EL_A.value = word;
-			addHistory(HISTORY_B, word);
 			calcWidth(EL_B, EL_CALC_WIDTH_B);
 		}
 	}
@@ -366,7 +364,7 @@
 	
 	function addHistory(history, word) {
 		history.push(word);
-		if (history.length >= 10 ) history.shift();
+		if (history.length >= 10) history.shift();
 	}
 
 	function createFavList(word) {
