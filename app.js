@@ -132,4 +132,4 @@ function createFavFiles() {
 		writeFileSync(file, '', 'utf8');
 	  }
 	});
-  }
+}
