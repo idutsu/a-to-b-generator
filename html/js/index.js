@@ -3,6 +3,7 @@
 	const TYPE_A = "a";
 	const TYPE_B = "b";
 	const CLASS_ACTIVE_BTN = "active-btn";
+	const TIMER_INTERVAL = 1500;
 	const EL_A = document.getElementById("a");
 	const EL_B = document.getElementById("b");
 	const EL_FAV_A = document.getElementById("fav-a-list");
@@ -369,7 +370,7 @@
 
 	let lastTime = 0;
 	const playRandom = async (timestamp) => {
-		if (timestamp - lastTime >= 2000) {
+		if (timestamp - lastTime >= TIMER_INTERVAL) {
 			lastTime = timestamp;
 			if (isPlayA) {
 				await getRandomA();
