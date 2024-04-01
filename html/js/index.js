@@ -293,7 +293,7 @@
 		const target = event.target;
 		if (target.tagName === "BUTTON" && target.dataset.type === "use") {
 			const word = target.parentNode.querySelector("span").textContent;
-			EL_A.value = word;
+			EL_B.value = word;
 			addHistory(HISTORY_B, word);
 			calcWidth(EL_B, EL_CALC_WIDTH_B);
 		}
