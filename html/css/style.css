@@ -172,6 +172,11 @@ input[type="radio"] {
 	overflow-y: scroll;
 }
 
+#search-list li:hover {
+	color: black;
+	background-color: #009900;
+}
+
 .calc {
     position: absolute;
     display: inline-block;
