@@ -83,13 +83,13 @@ app.post('/save/fav/word/:type/:word', async (req, res) => {
 app.post('/delete/fav/ab/:a/:b', async (req, res) => {
     const { a, b } = req.params;
     try {
-        const fileContent = await fs.readFile(FAV_AB, 'utf8');
+        const fileContent = await fs.readFile(FAV_['ab'], 'utf8');
         const lines = fileContent.split('\n');
         const filteredLines = lines.filter(line => {
             const [currentA, currentB] = line.split(',');
             return !(currentA === a && currentB === b);
         });
-        await fs.writeFile(FAV_AB, filteredLines.join('\n'), 'utf8');
+        await fs.writeFile(FAV_['ab'], filteredLines.join('\n'), 'utf8');
         res.json({ success: true, message: 'Sentence deleted successfully.' });
     } catch (error) {
         console.error(error);
@@ -124,12 +124,12 @@ function getDicLines(file) {
 
 function createFavFiles() {
 	Object.values(FAV_).forEach((file) => {
-	  if (!existsSync(file)) {
-		const dir = dirname(file);
-		if (!existsSync(dir)) {
-		  mkdirSync(dir, { recursive: true });
+		if (!existsSync(file)) {
+			const dir = dirname(file);
+			if (!existsSync(dir)) {
+				mkdirSync(dir, { recursive: true });
+			}
+			writeFileSync(file, '', 'utf8');
 		}
-		writeFileSync(file, '', 'utf8');
-	  }
 	});
 }
