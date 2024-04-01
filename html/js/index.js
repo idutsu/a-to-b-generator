@@ -9,6 +9,7 @@
 	const EL_FAV_A = document.getElementById("fav-a-list");
 	const EL_FAV_B = document.getElementById("fav-b-list");
 	const EL_FAV_AB = document.getElementById("fav-ab-list");
+	const EL_SEARCH = document.getElementById("search-list");
 	const EL_SAVE_BTN_A = document.getElementById("btn-save-a");
 	const EL_SAVE_BTN_B = document.getElementById("btn-save-b");
 	const EL_SAVE_BTN_AB = document.getElementById("btn-save-ab");
@@ -23,6 +24,7 @@
 	const EL_NEXT_BTN_B = document.getElementById("btn-next-b");
 	const EL_PREV_BTN_A = document.getElementById("btn-prev-a");
 	const EL_PREV_BTN_B = document.getElementById("btn-prev-b");
+	const EL_SEARCH_BTN = document.getElementById("btn-search");
 	const EL_CALC_WIDTH_A = document.getElementById("calc-width-a");
 	const EL_CALC_WIDTH_B = document.getElementById("calc-width-b");
 
@@ -383,6 +385,61 @@
 		requestAnimationFrame(playRandom);
 	};
 
+	const getSearchWords = async (event) => {
+		event.preventDefault();
+		if (isFetch) return;
+		isFetch = true;
+		const matchWord = document.getElementById('match-word').value;
+		const matchPosition = document.querySelector('input[name="match-position"]:checked').value;
+		const matchType = document.querySelector('input[name="match-type"]:checked').value;
+		if (matchWord !== "") {
+			try {
+				const response = await fetch(`/get/search/words/${matchType}/${matchPosition}/${matchWord}`);
+				const datas = await response.json();
+				if(datas) {
+					const fragment = document.createDocumentFragment();
+					datas.forEach(data => {
+						const li = document.createElement("li");
+						let word = data[12];
+						if (matchType === TYPE_B && data[7] === "サ変可能") word = word + "する";
+						li.textContent = word;
+						li.dataset.type = matchType;
+						fragment.appendChild(li);
+					});
+					EL_SEARCH.innerHTML = "";
+					EL_SEARCH.appendChild(fragment);
+				}
+			} catch (error) {
+				console.error(error);
+			}
+			finally {
+				isFetch = false;
+			}	
+		} else {
+			EL_SEARCH.innerHTML = "";
+			isFetch = false;
+		}
+	}
+
+	const useSearchWord = async (event) => {
+		if(isFetch) return;
+		const target = event.target;
+		if (target.tagName === "LI") {
+			const type = target.dataset.type;
+			const word = target.textContent;
+			if (type === TYPE_A) {
+				EL_A.value = word;
+				addHistory(HISTORY_A, word);
+				calcWidth(EL_A, EL_CALC_WIDTH_A);
+			} else if (type === TYPE_B) {
+				EL_B.value = word;
+				addHistory(HISTORY_B, word);
+				calcWidth(EL_B, EL_CALC_WIDTH_B);
+			}
+		}
+	}
+
+
 	//initialize
 	(async () => {
 		await getRandomAB();
@@ -408,6 +465,8 @@
 		EL_PLAY_BTN_B.addEventListener("click", playRandomB);
 		EL_PLAY_BTN_AB.addEventListener("click", playRandomAB);
 		EL_STOP_BTN.addEventListener("click", stopPlayRandom);
+		EL_SEARCH.addEventListener("click", useSearchWord);
+		EL_SEARCH_BTN.addEventListener("click", getSearchWords);
 		requestAnimationFrame(playRandom);
 		document.getElementById("content").style.display = "block";
 		document.getElementById("loading").style.display = "none";

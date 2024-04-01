@@ -53,6 +53,31 @@
 					</div>
 				</main>
 				<footer><a href="https://github.com/idutsu/a-to-b-generator" target="_blank">(C) 2024 A TO B GENERATOR</a></footer>
+				<div id="search">
+					<form id="search-form">
+						<fieldset>
+							<input type="text" id="match-word" name="match-word" placeholder="SEARCH WORD"/> 
+						</fieldset>
+						<fieldset>
+							<div>
+							  <input type="radio" id="match-a" name="match-type" value="a" checked/>
+							  <label for="match-a">A</label>
+							  <input type="radio" id="match-b" name="match-type" value="b" />
+							  <label for="match-b">B</label>
+							</div>
+						</fieldset>
+						<fieldset>
+						  <div>
+							<input type="radio" id="match-prefix" name="match-position" value="prefix" checked/>
+							<label for="match-prefix">PREFIX</label>
+							<input type="radio" id="match-backward" name="match-position" value="backward" />
+							<label for="match-backward">BACKWARD</label>
+						  </div>
+						</fieldset>
+						<button id="btn-search">SEARCH</button>
+					</form>
+					<ul id="search-list"></ul>
+				</div>
 			</div>
 			<span id="calc-width-a" class="calc"></span>
 			<span id="calc-width-b" class="calc"></span>

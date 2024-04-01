@@ -55,6 +55,29 @@ app.get('/get/fav/words/:type', async (req, res) => {
     }
 });
 
+app.get('/get/search/words/:matchType/:matchPosition/:matchWord', async (req, res) => {
+    let lines = DIC_[req.params.matchType];
+    const matchPosition = req.params.matchPosition;
+    const matchWord = req.params.matchWord;
+    try {
+        lines = lines.filter(line => {
+            const trimmedLine = line.trim();
+            if (!trimmedLine) return false;
+            const dicWord = trimmedLine.split(',')[12];
+            if (matchPosition === 'prefix') {
+                return dicWord.startsWith(matchWord);
+            } else if (matchPosition === 'backward') {
+                return dicWord.endsWith(matchWord);
+            }
+            return false;
+        }).map(line => line.split(',')); 
+        res.json(lines);  
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
+
 app.post('/save/fav/ab/:a/:b', async (req, res) => {
     const { a, b } = req.params;
     const newLine = `${a},${b}\n`;
