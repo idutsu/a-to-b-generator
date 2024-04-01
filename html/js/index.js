@@ -237,8 +237,9 @@
 	const deleteFavA = async (event) => {
 		if(isFetch) return;
 		isFetch = true;
-		if (event.target.tagName === "BUTTON" && event.target.dataset.type === "delete") {
-			const word = event.target.parentNode.querySelector("span").textContent;
+		const target = event.target;
+		if (target.tagName === "BUTTON" && target.dataset.type === "delete") {
+			const word = target.parentNode.querySelector("span").textContent;
 			try {
 				const response = await fetch(`/delete/fav/word/${TYPE_A}/${word}`, {method: "POST"});
 				const data = await response.json();
@@ -257,8 +258,9 @@
 	const deleteFavB = async (event) => {
 		if(isFetch) return;
 		isFetch = true;
-		if (event.target.tagName === "BUTTON" && event.target.dataset.type === "delete") {
-			const word = event.target.parentNode.querySelector("span").textContent;
+		const target = event.target;
+		if (target.tagName === "BUTTON" && target.dataset.type === "delete") {
+			const word = target.parentNode.querySelector("span").textContent;
 			try {
 				const response = await fetch(`/delete/fav/word/${TYPE_B}/${word}`, {method: "POST"});
 				const data = await response.json();
@@ -276,8 +278,9 @@
 
 	const useFavA = async (event) => {
 		if(isFetch) return;
-		if (event.target.tagName === "BUTTON" && event.target.dataset.type === "use") {
-			const word = event.target.parentNode.querySelector("span").textContent;
+		const target = event.target;
+		if (target.tagName === "BUTTON" && target.dataset.type === "use") {
+			const word = target.parentNode.querySelector("span").textContent;
 			EL_A.value = word;
 			addHistory(HISTORY_A, word);
 			calcWidth(EL_A, EL_CALC_WIDTH_A);
@@ -286,8 +289,9 @@
 
 	const useFavB = async (event) => {
 		if(isFetch) return;
-		if (event.target.tagName === "BUTTON" && event.target.dataset.type === "use") {
-			const word = event.target.parentNode.querySelector("span").textContent;
+		const target = event.target;
+		if (target.tagName === "BUTTON" && target.dataset.type === "use") {
+			const word = target.parentNode.querySelector("span").textContent;
 			EL_A.value = word;
 			addHistory(HISTORY_B, word);
 			calcWidth(EL_B, EL_CALC_WIDTH_B);
